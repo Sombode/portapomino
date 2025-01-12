@@ -889,13 +889,14 @@ public class EventReceiver {
 	 * @param modeConfig Properties you want to save
 	 */
 	public void saveModeConfig(CustomProperties modeConfig) {
-		try {
-			FileOutputStream out = new FileOutputStream("config/setting/mode.cfg");
-			modeConfig.store(out, "NullpoMino Mode Config");
-			out.close();
-		} catch(IOException e) {
-			log.error("Failed to save mode config", e);
-		}
+		log.warn("saveModeConfig() has been overriden and does nothing. Calls do nothing.");
+		// try {
+		// 	FileOutputStream out = new FileOutputStream("config/setting/mode.cfg");
+		// 	modeConfig.store(out, "NullpoMino Mode Config");
+		// 	out.close();
+		// } catch(IOException e) {
+		// 	log.error("Failed to save mode config", e);
+		// }
 	}
 
 	/**

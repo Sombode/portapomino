@@ -89,20 +89,20 @@ public class ResourceHolderSwing {
 	 * Loading images and sound files
 	 */
 	public static void load() {
-		String skindir = NullpoMinoSwing.propConfig.getProperty("custom.skin.directory", "res");
+		//String skindir = NullpoMinoSwing.propConfig.getProperty("custom.skin.directory", "res");
 
 		// Blocks
-		int numBlocks = 0;
-		File file = null;
-		while(true) {
-			file = new File(skindir + "/graphics/blockskin/normal/n" + numBlocks + ".png");
-			if(file.canRead()) {
-				numBlocks++;
-			} else {
-				break;
-			}
-		}
-		log.debug(numBlocks + " block skins found");
+		final int numBlocks = 29; // Hardcoded due to removal of custom skin support
+		// File file = null;
+		// while(true) {
+		// 	file = new File("graphics/blockskin/normal/n" + numBlocks + ".png");
+		// 	if(file.canRead()) {
+		// 		numBlocks++;
+		// 	} else {
+		// 		break;
+		// 	}
+		// }
+		// log.debug(numBlocks + " block skins found");
 
 		imgNormalBlockList = new LinkedList<Image>();
 		imgSmallBlockList = new LinkedList<Image>();
@@ -110,10 +110,10 @@ public class ResourceHolderSwing {
 		blockStickyFlagList = new LinkedList<Boolean>();
 
 		for(int i = 0; i < numBlocks; i++) {
-			Image imgNormal = loadImage(getURL(skindir + "/graphics/blockskin/normal/n" + i + ".png"));
+			Image imgNormal = loadImage(ResourceHolderSwing.class.getResource("graphics/blockskin/normal/n" + i + ".png"));
 			imgNormalBlockList.add(imgNormal);
-			imgSmallBlockList.add(loadImage(getURL(skindir + "/graphics/blockskin/small/s" + i + ".png")));
-			imgBigBlockList.add(loadImage(getURL(skindir + "/graphics/blockskin/big/b" + i + ".png")));
+			imgSmallBlockList.add(loadImage(ResourceHolderSwing.class.getResource("graphics/blockskin/small/s" + i + ".png")));
+			imgBigBlockList.add(loadImage(ResourceHolderSwing.class.getResource("graphics/blockskin/big/b" + i + ".png")));
 
 			if((imgNormal.getWidth(null) >= 400) && (imgNormal.getHeight(null) >= 304)) {
 				blockStickyFlagList.add(Boolean.TRUE);
@@ -123,13 +123,13 @@ public class ResourceHolderSwing {
 		}
 
 		// Other images
-		imgFont = loadImage(getURL(skindir + "/graphics/font.png"));
-		imgFontSmall = loadImage(getURL(skindir + "/graphics/font_small.png"));
-		imgFrame = loadImage(getURL(skindir + "/graphics/frame.png"));
-		imgFieldbg = loadImage(getURL(skindir + "/graphics/fieldbg.png"));
-		imgFieldbg2 = loadImage(getURL(skindir + "/graphics/fieldbg2.png"));
-		imgFieldbg2Small = loadImage(getURL(skindir + "/graphics/fieldbg2_small.png"));
-		imgFieldbg2Big = loadImage(getURL(skindir + "/graphics/fieldbg2_big.png"));
+		imgFont = loadImage(ResourceHolderSwing.class.getResource("graphics/font.png"));
+		imgFontSmall = loadImage(ResourceHolderSwing.class.getResource("graphics/font_small.png"));
+		imgFrame = loadImage(ResourceHolderSwing.class.getResource("graphics/frame.png"));
+		imgFieldbg = loadImage(ResourceHolderSwing.class.getResource("graphics/fieldbg.png"));
+		imgFieldbg2 = loadImage(ResourceHolderSwing.class.getResource("graphics/fieldbg2.png"));
+		imgFieldbg2Small = loadImage(ResourceHolderSwing.class.getResource("graphics/fieldbg2_small.png"));
+		imgFieldbg2Big = loadImage(ResourceHolderSwing.class.getResource("graphics/fieldbg2_big.png"));
 
 		if(NullpoMinoSwing.propConfig.getProperty("option.showlineeffect", false) == true) {
 			loadLineClearEffectImages();
@@ -141,71 +141,71 @@ public class ResourceHolderSwing {
 		// Sound effects
 		soundManager = new WaveEngine();
 		if(NullpoMinoSwing.propConfig.getProperty("option.se", true) == true) {
-			soundManager.load("cursor", skindir + "/se/cursor.wav");
-			soundManager.load("decide", skindir + "/se/decide.wav");
-			soundManager.load("erase1", skindir + "/se/erase1.wav");
-			soundManager.load("erase2", skindir + "/se/erase2.wav");
-			soundManager.load("erase3", skindir + "/se/erase3.wav");
-			soundManager.load("erase4", skindir + "/se/erase4.wav");
-			soundManager.load("died", skindir + "/se/died.wav");
-			soundManager.load("gameover", skindir + "/se/gameover.wav");
-			soundManager.load("hold", skindir + "/se/hold.wav");
-			soundManager.load("holdfail", skindir + "/se/holdfail.wav");
-			soundManager.load("initialhold", skindir + "/se/initialhold.wav");
-			soundManager.load("initialrotate", skindir + "/se/initialrotate.wav");
-			soundManager.load("levelup", skindir + "/se/levelup.wav");
-			soundManager.load("linefall", skindir + "/se/linefall.wav");
-			soundManager.load("lock", skindir + "/se/lock.wav");
-			soundManager.load("move", skindir + "/se/move.wav");
-			soundManager.load("pause", skindir + "/se/pause.wav");
-			soundManager.load("rotate", skindir + "/se/rotate.wav");
-			soundManager.load("step", skindir + "/se/step.wav");
-			soundManager.load("piece0", skindir + "/se/piece0.wav");
-			soundManager.load("piece1", skindir + "/se/piece1.wav");
-			soundManager.load("piece2", skindir + "/se/piece2.wav");
-			soundManager.load("piece3", skindir + "/se/piece3.wav");
-			soundManager.load("piece4", skindir + "/se/piece4.wav");
-			soundManager.load("piece5", skindir + "/se/piece5.wav");
-			soundManager.load("piece6", skindir + "/se/piece6.wav");
-			soundManager.load("piece7", skindir + "/se/piece7.wav");
-			soundManager.load("piece8", skindir + "/se/piece8.wav");
-			soundManager.load("piece9", skindir + "/se/piece9.wav");
-			soundManager.load("piece10", skindir + "/se/piece10.wav");
-			soundManager.load("harddrop", skindir + "/se/harddrop.wav");
-			soundManager.load("softdrop", skindir + "/se/softdrop.wav");
-			soundManager.load("levelstop", skindir + "/se/levelstop.wav");
-			soundManager.load("endingstart", skindir + "/se/endingstart.wav");
-			soundManager.load("excellent", skindir + "/se/excellent.wav");
-			soundManager.load("b2b_start", skindir + "/se/b2b_start.wav");
-			soundManager.load("b2b_continue", skindir + "/se/b2b_continue.wav");
-			soundManager.load("b2b_end", skindir + "/se/b2b_end.wav");
-			soundManager.load("gradeup", skindir + "/se/gradeup.wav");
-			soundManager.load("countdown", skindir + "/se/countdown.wav");
-			soundManager.load("tspin0", skindir + "/se/tspin0.wav");
-			soundManager.load("tspin1", skindir + "/se/tspin1.wav");
-			soundManager.load("tspin2", skindir + "/se/tspin2.wav");
-			soundManager.load("tspin3", skindir + "/se/tspin3.wav");
-			soundManager.load("ready", skindir + "/se/ready.wav");
-			soundManager.load("go", skindir + "/se/go.wav");
-			soundManager.load("movefail", skindir + "/se/movefail.wav");
-			soundManager.load("rotfail", skindir + "/se/rotfail.wav");
-			soundManager.load("medal", skindir + "/se/medal.wav");
-			soundManager.load("change", skindir + "/se/change.wav");
-			soundManager.load("bravo", skindir + "/se/bravo.wav");
-			soundManager.load("cool", skindir + "/se/cool.wav");
-			soundManager.load("regret", skindir + "/se/regret.wav");
-			soundManager.load("garbage", skindir + "/se/garbage.wav");
-			soundManager.load("stageclear", skindir + "/se/stageclear.wav");
-			soundManager.load("stagefail", skindir + "/se/stagefail.wav");
-			soundManager.load("gem", skindir + "/se/gem.wav");
-			soundManager.load("danger", skindir + "/se/danger.wav");
-			soundManager.load("matchend", skindir + "/se/matchend.wav");
-			soundManager.load("hurryup", skindir + "/se/hurryup.wav");
-			soundManager.load("square_s", skindir + "/se/square_s.wav");
-			soundManager.load("square_g", skindir + "/se/square_g.wav");
+			soundManager.load("cursor", "se/cursor.wav");
+			soundManager.load("decide", "se/decide.wav");
+			soundManager.load("erase1", "se/erase1.wav");
+			soundManager.load("erase2", "se/erase2.wav");
+			soundManager.load("erase3", "se/erase3.wav");
+			soundManager.load("erase4", "se/erase4.wav");
+			soundManager.load("died", "se/died.wav");
+			soundManager.load("gameover", "se/gameover.wav");
+			soundManager.load("hold", "se/hold.wav");
+			soundManager.load("holdfail", "se/holdfail.wav");
+			soundManager.load("initialhold", "se/initialhold.wav");
+			soundManager.load("initialrotate", "se/initialrotate.wav");
+			soundManager.load("levelup", "se/levelup.wav");
+			soundManager.load("linefall", "se/linefall.wav");
+			soundManager.load("lock", "se/lock.wav");
+			soundManager.load("move", "se/move.wav");
+			soundManager.load("pause", "se/pause.wav");
+			soundManager.load("rotate", "se/rotate.wav");
+			soundManager.load("step", "se/step.wav");
+			soundManager.load("piece0", "se/piece0.wav");
+			soundManager.load("piece1", "se/piece1.wav");
+			soundManager.load("piece2", "se/piece2.wav");
+			soundManager.load("piece3", "se/piece3.wav");
+			soundManager.load("piece4", "se/piece4.wav");
+			soundManager.load("piece5", "se/piece5.wav");
+			soundManager.load("piece6", "se/piece6.wav");
+			soundManager.load("piece7", "se/piece7.wav");
+			soundManager.load("piece8", "se/piece8.wav");
+			soundManager.load("piece9", "se/piece9.wav");
+			soundManager.load("piece10", "se/piece10.wav");
+			soundManager.load("harddrop", "se/harddrop.wav");
+			soundManager.load("softdrop", "se/softdrop.wav");
+			soundManager.load("levelstop", "se/levelstop.wav");
+			soundManager.load("endingstart", "se/endingstart.wav");
+			soundManager.load("excellent", "se/excellent.wav");
+			soundManager.load("b2b_start", "se/b2b_start.wav");
+			soundManager.load("b2b_continue", "se/b2b_continue.wav");
+			soundManager.load("b2b_end", "se/b2b_end.wav");
+			soundManager.load("gradeup", "se/gradeup.wav");
+			soundManager.load("countdown", "se/countdown.wav");
+			soundManager.load("tspin0", "se/tspin0.wav");
+			soundManager.load("tspin1", "se/tspin1.wav");
+			soundManager.load("tspin2", "se/tspin2.wav");
+			soundManager.load("tspin3", "se/tspin3.wav");
+			soundManager.load("ready", "se/ready.wav");
+			soundManager.load("go", "se/go.wav");
+			soundManager.load("movefail", "se/movefail.wav");
+			soundManager.load("rotfail", "se/rotfail.wav");
+			soundManager.load("medal", "se/medal.wav");
+			soundManager.load("change", "se/change.wav");
+			soundManager.load("bravo", "se/bravo.wav");
+			soundManager.load("cool", "se/cool.wav");
+			soundManager.load("regret", "se/regret.wav");
+			soundManager.load("garbage", "se/garbage.wav");
+			soundManager.load("stageclear", "se/stageclear.wav");
+			soundManager.load("stagefail", "se/stagefail.wav");
+			soundManager.load("gem", "se/gem.wav");
+			soundManager.load("danger", "se/danger.wav");
+			soundManager.load("matchend", "se/matchend.wav");
+			soundManager.load("hurryup", "se/hurryup.wav");
+			soundManager.load("square_s", "se/square_s.wav");
+			soundManager.load("square_g", "se/square_g.wav");
 
 			for(int i = 0; i < 20; i++) {
-				soundManager.load("combo" + (i + 1), skindir + "/se/combo" + (i + 1) + ".wav");
+				soundManager.load("combo" + (i + 1), "se/combo" + (i + 1) + ".wav");
 			}
 
 			soundManager.setVolume(NullpoMinoSwing.propConfig.getProperty("option.sevolume", 0.5));
@@ -219,9 +219,9 @@ public class ResourceHolderSwing {
 		if(imgPlayBG == null) {
 			imgPlayBG = new Image[BACKGROUND_MAX];
 
-			String skindir = NullpoMinoSwing.propConfig.getProperty("custom.skin.directory", "res");
+			// String skindir = NullpoMinoSwing.propConfig.getProperty("custom.skin.directory", "res");
 			for(int i = 0; i < BACKGROUND_MAX; i++) {
-				imgPlayBG[i] = loadImage(getURL(skindir + "/graphics/back" + i + ".png"));
+				imgPlayBG[i] = loadImage(ResourceHolderSwing.class.getResource("graphics/back" + i + ".png"));
 			}
 		}
 	}
@@ -230,14 +230,14 @@ public class ResourceHolderSwing {
 	 * Load line clear effect images.
 	 */
 	public static void loadLineClearEffectImages() {
-		String skindir = NullpoMinoSwing.propConfig.getProperty("custom.skin.directory", "res");
+		// String skindir = NullpoMinoSwing.propConfig.getProperty("custom.skin.directory", "res");
 
 		if(imgBreak == null) {
 			imgBreak = new Image[BLOCK_BREAK_MAX][BLOCK_BREAK_SEGMENTS];
 
 			for(int i = 0; i < BLOCK_BREAK_MAX; i++) {
 				for(int j = 0; j < BLOCK_BREAK_SEGMENTS; j++) {
-					imgBreak[i][j] = loadImage(getURL(skindir + "/graphics/break" + i + "_" + j + ".png"));
+					imgBreak[i][j] = loadImage(ResourceHolderSwing.class.getResource("graphics/break" + i + "_" + j + ".png"));
 				}
 			}
 		}
@@ -245,7 +245,7 @@ public class ResourceHolderSwing {
 			imgPErase = new Image[PERASE_MAX];
 
 			for(int i = 0; i < imgPErase.length; i++) {
-				imgPErase[i] = loadImage(getURL(skindir + "/graphics/perase" + i + ".png"));
+				imgPErase[i] = loadImage(ResourceHolderSwing.class.getResource("graphics/perase" + i + ".png"));
 			}
 		}
 	}
@@ -274,28 +274,28 @@ public class ResourceHolderSwing {
 	 * @param str Filename
 	 * @return Resource FilesURL
 	 */
-	public static URL getURL(String str) {
-		URL url = null;
+	// public static URL getURL(String str) {
+	// 	URL url = null;
 
-		try {
-			char sep = File.separator.charAt(0);
-			String file = str.replace(sep, '/');
+	// 	try {
+	// 		char sep = File.separator.charAt(0);
+	// 		String file = str.replace(sep, '/');
 
-			// 参考(消滅)：http://www.asahi-net.or.jp/~DP8T-ASM/java/tips/HowToMakeURL.html
-			if(file.charAt(0) != '/') {
-				String dir = System.getProperty("user.dir");
-				dir = dir.replace(sep, '/') + '/';
-				if(dir.charAt(0) != '/') {
-					dir = "/" + dir;
-				}
-				file = dir + file;
-			}
-			url = new URL("file", "", file);
-		} catch(MalformedURLException e) {
-			log.warn("Invalid URL:" + str, e);
-			return null;
-		}
+	// 		// 参考(消滅)：http://www.asahi-net.or.jp/~DP8T-ASM/java/tips/HowToMakeURL.html
+	// 		if(file.charAt(0) != '/') {
+	// 			String dir = System.getProperty("user.dir");
+	// 			dir = dir.replace(sep, '/') + '/';
+	// 			if(dir.charAt(0) != '/') {
+	// 				dir = "/" + dir;
+	// 			}
+	// 			file = dir + file;
+	// 		}
+	// 		url = new URL("file", "", file);
+	// 	} catch(MalformedURLException e) {
+	// 		log.warn("Invalid URL:" + str, e);
+	// 		return null;
+	// 	}
 
-		return url;
-	}
+	// 	return url;
+	// }
 }

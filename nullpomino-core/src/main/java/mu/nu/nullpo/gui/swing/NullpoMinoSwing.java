@@ -44,6 +44,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.Buffer;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Locale;
@@ -90,6 +93,7 @@ import net.omegaboshi.nullpomino.game.subsystem.randomizer.Randomizer;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import org.newdawn.slick.Input;
 
 /**
  * NullpoMino SwingVersion
@@ -195,71 +199,77 @@ public class NullpoMinoSwing extends JFrame implements ActionListener, NetLobbyL
 	public static void main(String[] args) {
 		programArgs = args;
 
-		PropertyConfigurator.configure("config/etc/log_swing.cfg");
+		PropertyConfigurator.configure(NullpoMinoSwing.class.getResource("config/etc/log_swing.cfg"));
 		log.debug("NullpoMinoSwing Start");
 
 		// Read configuration file
 		propConfig = new CustomProperties();
-		try {
-			FileInputStream in = new FileInputStream("config/setting/swing.cfg");
+		try (InputStream in = NullpoMinoSwing.class.getResourceAsStream("config/setting/swing.cfg")) {
+			//FileInputStream in = new FileInputStream("config/setting/swing.cfg");
 			propConfig.load(in);
-			in.close();
-		} catch(IOException e) {}
+			//in.close();
+		} catch(Exception e) {}
 
 		propGlobal = new CustomProperties();
 		loadGlobalConfig();
 
 		// ModeRead
 		modeManager = new ModeManager();
-		try {
-			BufferedReader txtMode = new BufferedReader(new FileReader("config/list/mode.lst"));
+		try (BufferedReader txtMode = new BufferedReader(new InputStreamReader(NullpoMinoSwing.class.getResourceAsStream("config/list/mode.lst")))) {
+			//BufferedReader txtMode = new BufferedReader(new FileReader("config/list/mode.lst"));
 			modeManager.loadGameModes(txtMode);
-			txtMode.close();
+			// txtMode.close();
 			modeList = modeManager.getModeNames(false);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			log.error("Mode list load failed", e);
 		}
 
 		// Read language file
 		propLangDefault = new CustomProperties();
-		try {
-			FileInputStream in = new FileInputStream("config/lang/swing_default.properties");
+		try (InputStream in = NullpoMinoSwing.class.getResourceAsStream("config/lang/swing_default.properties")) {
+			// FileInputStream in = new FileInputStream("config/lang/swing_default.properties");
 			propLangDefault.load(in);
-			in.close();
-		} catch (IOException e) {
+			// in.close();
+		} catch (Exception e) {
 			log.error("Couldn't load default UI language file", e);
 		}
 
 		propLang = new CustomProperties();
-		try {
-			FileInputStream in = new FileInputStream("config/lang/swing_" + Locale.getDefault().getCountry() + ".properties");
+		try (InputStream in = NullpoMinoSwing.class.getResourceAsStream("config/lang/swing_" + Locale.getDefault().getCountry() + ".properties")) {
+			// FileInputStream in = new FileInputStream("config/lang/swing_" + Locale.getDefault().getCountry() + ".properties");
 			propLang.load(in);
-			in.close();
-		} catch(IOException e) {}
+			// in.close();
+		} catch(Exception e) {
+			log.warn("Failed to load localized UI language file for " + Locale.getDefault().getCountry() + ". Defaulting to English.");
+			propLang = propLangDefault;
+		}
 
 		// Game mode description
 		propDefaultModeDesc = new CustomProperties();
-		try {
-			FileInputStream in = new FileInputStream("config/lang/modedesc_default.properties");
+		try (InputStream in = NullpoMinoSwing.class.getResourceAsStream("config/lang/modedesc_default.properties")) {
+			// FileInputStream in = new FileInputStream("config/lang/modedesc_default.properties");
 			propDefaultModeDesc.load(in);
-			in.close();
-		} catch(IOException e) {
+			// in.close();
+		} catch(Exception e) {
 			log.error("Couldn't load default mode description file", e);
 		}
 
 		propModeDesc = new CustomProperties();
-		try {
-			FileInputStream in = new FileInputStream("config/lang/modedesc_" + Locale.getDefault().getCountry() + ".properties");
+		try (InputStream in = NullpoMinoSwing.class.getResourceAsStream("config/lang/modedesc_" + Locale.getDefault().getCountry() + ".properties")) {
+			// FileInputStream in = new FileInputStream("config/lang/modedesc_" + Locale.getDefault().getCountry() + ".properties");
 			propModeDesc.load(in);
-			in.close();
-		} catch(IOException e) {}
+			// in.close();
+		} catch(Exception e) {
+			log.warn("Failed to load localized mode descriptions for " + Locale.getDefault().getCountry() + ". Defaulting to English.");
+			propModeDesc = propDefaultModeDesc;
+		}
 
 		// Set default rule selections
-		try {
+		try (InputStream in = NullpoMinoSwing.class.getResourceAsStream("config/list/global_defaultrule.properties")) {
 			CustomProperties propDefaultRule = new CustomProperties();
-			FileInputStream in = new FileInputStream("config/list/global_defaultrule.properties");
+			// FileInputStream in = new FileInputStream("config/list/global_defaultrule.properties");
 			propDefaultRule.load(in);
-			in.close();
+			// in.close();
 
 			for(int pl = 0; pl < 2; pl++)
 				for(int i = 0; i < GameEngine.MAX_GAMESTYLE; i++) {
@@ -350,31 +360,32 @@ public class NullpoMinoSwing extends JFrame implements ActionListener, NetLobbyL
 	 * Save the configuration file
 	 */
 	public static void saveConfig() {
-		try {
-			FileOutputStream out = new FileOutputStream("config/setting/swing.cfg");
-			propConfig.store(out, "NullpoMino Swing-frontend Config");
-			out.close();
-		} catch(IOException e) {
-			log.error("Failed to save Swing-specific config", e);
-		}
+		log.warn("saveConfig() has been overridden and does nothing. Calls do nothing.");
+		// try {
+		// 	FileOutputStream out = new FileOutputStream("config/setting/swing.cfg");
+		// 	propConfig.store(out, "NullpoMino Swing-frontend Config");
+		// 	out.close();
+		// } catch(IOException e) {
+		// 	log.error("Failed to save Swing-specific config", e);
+		// }
 
-		try {
-			FileOutputStream out = new FileOutputStream("config/setting/global.cfg");
-			propGlobal.store(out, "NullpoMino Global Config");
-			out.close();
-		} catch(IOException e) {
-			log.error("Failed to save global config", e);
-		}
+		// try {
+		// 	FileOutputStream out = new FileOutputStream("config/setting/global.cfg");
+		// 	propGlobal.store(out, "NullpoMino Global Config");
+		// 	out.close();
+		// } catch(IOException e) {
+		// 	log.error("Failed to save global config", e);
+		// }
 	}
 
 	/**
 	 * (Re-)Load global config file
 	 */
 	public static void loadGlobalConfig() {
-		try {
-			FileInputStream in = new FileInputStream("config/setting/global.cfg");
+		try (InputStream in = new FileInputStream("config/setting/global.cfg")) {
+			// FileInputStream in = new FileInputStream("config/setting/global.cfg");
 			propGlobal.load(in);
-			in.close();
+			// in.close();
 		} catch(IOException e) {}
 	}
 
@@ -682,8 +693,8 @@ public class NullpoMinoSwing extends JFrame implements ActionListener, NetLobbyL
 	protected void loadRecommendedRuleList() {
 		mapRuleEntries = new HashMap<String, RuleEntry>();
 
-		try {
-			BufferedReader in = new BufferedReader(new FileReader("config/list/recommended_rules.lst"));
+		try (BufferedReader in = new BufferedReader(new InputStreamReader(NullpoMinoSwing.class.getResourceAsStream("config/list/recommended_rules.lst")))) {
+			// BufferedReader in = new BufferedReader(new FileReader("config/list/recommended_rules.lst"));
 			String strMode = "";
 
 			String str;
@@ -697,32 +708,50 @@ public class NullpoMinoSwing extends JFrame implements ActionListener, NetLobbyL
 					strMode = str.substring(1);
 				} else {
 					// File Path
-					File file = new File(str);
-					if(file.exists() && file.isFile()) {
-						try {
-							FileInputStream ruleIn = new FileInputStream(file);
-							CustomProperties propRule = new CustomProperties();
-							propRule.load(ruleIn);
-							ruleIn.close();
+					// File file = new File(str);
+					// if(file.exists() && file.isFile()) {
+					// 	try {
+					// 		FileInputStream ruleIn = new FileInputStream(file);
+					// 		CustomProperties propRule = new CustomProperties();
+					// 		propRule.load(ruleIn);
+					// 		ruleIn.close();
 
-							String strRuleName = propRule.getProperty("0.ruleopt.strRuleName", "");
-							if(strRuleName.length() > 0) {
-								RuleEntry entry = mapRuleEntries.get(strMode);
-								if(entry == null) {
-									entry = new RuleEntry();
-									mapRuleEntries.put(strMode, entry);
-								}
-								entry.listName.add(strRuleName);
-								entry.listPath.add(str);
+					// 		String strRuleName = propRule.getProperty("0.ruleopt.strRuleName", "");
+					// 		if(strRuleName.length() > 0) {
+					// 			RuleEntry entry = mapRuleEntries.get(strMode);
+					// 			if(entry == null) {
+					// 				entry = new RuleEntry();
+					// 				mapRuleEntries.put(strMode, entry);
+					// 			}
+					// 			entry.listName.add(strRuleName);
+					// 			entry.listPath.add(str);
+					// 		}
+					// 	} catch (IOException e2) {
+					// 		log.error("File " + str + " doesn't exist", e2);
+					// 	}
+					// }
+					try (InputStream ruleIn = NullpoMinoSwing.class.getResourceAsStream(str)) {
+						CustomProperties propRule = new CustomProperties();
+						propRule.load(ruleIn);
+						ruleIn.close();
+
+						String strRuleName = propRule.getProperty("0.ruleopt.strRuleName", "");
+						if(strRuleName.length() > 0) {
+							RuleEntry entry = mapRuleEntries.get(strMode);
+							if(entry == null) {
+								entry = new RuleEntry();
+								mapRuleEntries.put(strMode, entry);
 							}
-						} catch (IOException e2) {
-							log.error("File " + str + " doesn't exist", e2);
+							entry.listName.add(strRuleName);
+							entry.listPath.add(str);
 						}
+					} catch(Exception e2) {
+						log.error("Error loading ruleset for " + str, e2);
 					}
 				}
 			}
 
-			in.close();
+			// in.close();
 		} catch (IOException e) {
 			log.error("Failed to load recommended rules list", e);
 		}

@@ -29,6 +29,7 @@
 package mu.nu.nullpo.util;
 
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -41,6 +42,7 @@ import mu.nu.nullpo.game.component.Piece;
 import mu.nu.nullpo.game.component.RuleOptions;
 import mu.nu.nullpo.game.subsystem.ai.DummyAI;
 import mu.nu.nullpo.game.subsystem.wallkick.Wallkick;
+import mu.nu.nullpo.gui.swing.NullpoMinoSwing;
 import net.omegaboshi.nullpomino.game.subsystem.randomizer.Randomizer;
 
 /**
@@ -265,10 +267,10 @@ public class GeneralUtil {
 	public static RuleOptions loadRule(String filename) {
 		CustomProperties prop = new CustomProperties();
 
-		try {
-			FileInputStream in = new FileInputStream(filename);
+		try (InputStream in = NullpoMinoSwing.class.getResourceAsStream(filename)) {
+			// FileInputStream in = new FileInputStream(filename);
 			prop.load(in);
-			in.close();
+			// in.close();
 		} catch (Exception e) {
 			log.warn("Failed to load rule from " + filename, e);
 		}

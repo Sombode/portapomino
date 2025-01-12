@@ -113,7 +113,7 @@ public class WaveEngine implements LineListener {
 	 * @param filename Filename
 	 */
 	public void load(String name, String filename) {
-		load(name, ResourceHolderSwing.getURL(filename));
+		load(name, WaveEngine.class.getResource(filename));
 	}
 
 	/**

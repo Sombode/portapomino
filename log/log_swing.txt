@@ -1,0 +1,17 @@
+25-01-12 12:15:44,546 [main] DEBUG mu.nu.nullpo.gui.swing.NullpoMinoSwing: NullpoMinoSwing Start
+25-01-12 12:15:49,188 [AWT-EventQueue-0] WARN  mu.nu.nullpo.gui.swing.NullpoMinoSwing: saveConfig() has been overridden and does nothing. Calls do nothing.
+25-01-12 12:15:53,203 [AWT-EventQueue-0] WARN  mu.nu.nullpo.gui.swing.NullpoMinoSwing: saveConfig() has been overridden and does nothing. Calls do nothing.
+25-01-12 12:15:53,206 [AWT-EventQueue-0] DEBUG mu.nu.nullpo.game.play.GameManager: GameManager constructor called
+25-01-12 12:15:53,207 [AWT-EventQueue-0] DEBUG mu.nu.nullpo.game.play.GameManager: GameManager init()
+25-01-12 12:15:53,222 [AWT-EventQueue-0] DEBUG mu.nu.nullpo.game.subsystem.mode.NetDummyMode: modeInit() on NetDummyMode
+25-01-12 12:15:53,246 [AWT-EventQueue-0] DEBUG mu.nu.nullpo.gui.swing.NullpoMinoSwing: Load rule options from config/rule/Standard.rul
+25-01-12 12:15:53,286 [AWT-EventQueue-0] DEBUG mu.nu.nullpo.game.play.GameEngine: Player + 0Random seed :-22ccbdfd60e13d34
+25-01-12 12:15:53,307 [AWT-EventQueue-0] DEBUG mu.nu.nullpo.gui.swing.GameFrame: GameFrame created
+25-01-12 12:15:53,529 [Game Thread] DEBUG mu.nu.nullpo.gui.swing.NullpoMinoSwing: startObserverClient called
+25-01-12 12:15:53,532 [Game Thread] DEBUG mu.nu.nullpo.gui.swing.GameFrame: Game thread start
+25-01-12 12:15:55,750 [Game Thread] WARN  mu.nu.nullpo.game.event.EventReceiver: saveModeConfig() has been overriden and does nothing. Calls do nothing.
+25-01-12 12:16:40,483 [Game Thread] DEBUG mu.nu.nullpo.game.play.GameManager: GameManager shutdown()
+25-01-12 12:16:40,484 [Game Thread] DEBUG mu.nu.nullpo.gui.swing.NullpoMinoSwing: stopObserverClient called
+25-01-12 12:16:40,484 [Game Thread] DEBUG mu.nu.nullpo.gui.swing.GameFrame: Game thread end
+25-01-12 12:16:41,557 [AWT-EventQueue-0] DEBUG mu.nu.nullpo.gui.swing.NullpoMinoSwing: Main shutdown() called
+25-01-12 12:16:41,558 [AWT-EventQueue-0] WARN  mu.nu.nullpo.gui.swing.NullpoMinoSwing: saveConfig() has been overridden and does nothing. Calls do nothing.
