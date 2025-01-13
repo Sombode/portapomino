@@ -47,6 +47,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import mu.nu.nullpo.game.net.NetObserverClient;
 import mu.nu.nullpo.game.play.GameManager;
@@ -65,6 +66,9 @@ public class GameFrame extends JFrame implements Runnable {
 
 	/** Parent window */
 	protected NullpoMinoSwing owner = null;
+
+	/** Drawg panel (for graphics) */
+	protected JPanel gamePanel;
 
 	/** The size of the border and title bar */
 	protected Insets insets = null;
@@ -170,12 +174,21 @@ public class GameFrame extends JFrame implements Runnable {
 	public GameFrame(NullpoMinoSwing owner) throws HeadlessException {
 		super();
 		this.owner = owner;
+		gamePanel = new JPanel() {
+			@Override
+			public void paintComponent(Graphics g) {
+				super.paintComponent(g);
+				gameRender(g);
+			}
+		};
+		gamePanel.setIgnoreRepaint(true);
+		this.add(gamePanel);
 
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setTitle(NullpoMinoSwing.getUIText("Title_Game"));
 		setBackground(Color.black);
 		setResizable(false);
-		setIgnoreRepaint(true);
+		//setIgnoreRepaint(true);
 
 		addWindowListener(new GameFrameWindowEvent());
 		addKeyListener(new GameFrameKeyEvent());
@@ -277,7 +290,8 @@ public class GameFrame extends JFrame implements Runnable {
 				gameRenderNet();
 			} else if(isVisible() && isActive()) {
 				gameUpdate();
-				gameRender();
+				//gameRender();
+				gamePanel.repaint();
 			} else {
 				GameKeySwing.gamekey[0].clear();
 				GameKeySwing.gamekey[1].clear();
@@ -625,29 +639,29 @@ public class GameFrame extends JFrame implements Runnable {
 	/**
 	 * Rendering
 	 */
-	protected void gameRender() {
+	protected void gameRender(Graphics g) {
 		if(NullpoMinoSwing.gameManager == null) return;
 
 		// Prepare the screen
 		if(ssImage == null) {
 			ssImage = createImage(640, 480);
 		}
-		if((bufferStrategy == null) || bufferStrategy.contentsLost()) {
-			try {
-				createBufferStrategy(2);
-				bufferStrategy = getBufferStrategy();
-			} catch (Exception e) {
-				return;
-			}
-		}
+		// if((bufferStrategy == null) || bufferStrategy.contentsLost()) {
+		// 	try {
+		// 		createBufferStrategy(2);
+		// 		bufferStrategy = getBufferStrategy();
+		// 	} catch (Exception e) {
+		// 		return;
+		// 	}
+		// }
 
-		Graphics g = null;
-		if(ssflag || (screenWidth != 640) || (screenHeight != 480)) {
-			g = ssImage.getGraphics();
-		} else {
-			g = bufferStrategy.getDrawGraphics();
-			if(insets != null) g.translate(insets.left, insets.top);
-		}
+		// Graphics g = null;
+		// if(ssflag || (screenWidth != 640) || (screenHeight != 480)) {
+		// 	g = ssImage.getGraphics();
+		// } else {
+		// 	g = bufferStrategy.getDrawGraphics();
+		// 	if(insets != null) g.translate(insets.left, insets.top);
+		// }
 
 		// Game screen
 		NormalFontSwing.graphics = (Graphics2D) g;

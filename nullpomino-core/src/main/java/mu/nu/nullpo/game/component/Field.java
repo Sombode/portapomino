@@ -338,20 +338,19 @@ public class Field implements Serializable {
 	 * @throws ArrayIndexOutOfBoundsException
 	 */
 	public Block[] getRowE(int y) throws ArrayIndexOutOfBoundsException {
-		if(y >= 0) {
-			try {
+		if(y >= 0)
+			if(y < block_field.length)
 				return block_field[y];
-			} catch(ArrayIndexOutOfBoundsException e) {
-				throw e;
-			}
-		}
+			else
+				return null;
+				// throw new ArrayIndexOutOfBoundsException("Trying to access height of row " + y + " from field: " + block_field.toString());
 		// fieldOutside
-		try {
-			int y2 = (y * -1) - 1;
+		int y2 = (y * -1) - 1;
+		if(y2 < block_hidden.length)
 			return block_hidden[y2];
-		} catch(ArrayIndexOutOfBoundsException e) {
-			throw e;
-		}
+		else
+			return null;
+			// throw new ArrayIndexOutOfBoundsException("Trying to access height of hidden row " + ((y * -1) - 1) + "(base " + y + ") from field: " + block_hidden.toString());
 	}
 
 	/**
@@ -497,21 +496,19 @@ public class Field implements Serializable {
 	public boolean getLineFlag(int y) {
 		// fieldIn
 		if(y >= 0) {
-			try {
+			if(y < lineflag_field.length)
 				return lineflag_field[y];
-			} catch(ArrayIndexOutOfBoundsException e) {
+			else
 				return false;
-			}
 		}
 
 		// fieldOutside
 		int y2 = (y * -1) - 1;
 
-		try {
+		if(y2 < lineflag_hidden.length)
 			return lineflag_hidden[y2];
-		} catch(ArrayIndexOutOfBoundsException e) {
+		else
 			return false;
-		}
 	}
 
 	/**
@@ -741,7 +738,7 @@ public class Field implements Serializable {
 					}
 				}
 			}
-			if(getLineFlag(i + 1)) {
+			if(i < 19 && getLineFlag(i + 1)) {
 				for(int j = 0; j < width; j++) {
 					Block blk = getBlock(j, i);
 
